@@ -4,10 +4,10 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract MyMint is ERC20 {
 
-    string tokenName= "My minting smart contract."; // You set the name.
-    string tokenSymbol= "MINT"; // You set the symbol.
+    string tokenName= "My lorax minting smart contract."; // You set the name.
+    string tokenSymbol= "LxC"; // You set the symbol.
     uint256 tokenDecimals= 18; // Most tokens use 18 decimal places.
-    uint256 maxTokenSupply= 1000000*(10**tokenDecimals); // You set the max supply.
+    uint256 maxTokenSupply= 8000000*(10**tokenDecimals); // You set the max supply.
 
     constructor() ERC20(tokenName, tokenSymbol) { 
         /* This function creates the token, but it does not mint any tokens.
