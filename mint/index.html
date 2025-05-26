@@ -92,25 +92,25 @@
             console.log("supply="+supply+" tokenAddr:"+mintContractAddress); 
         }
 
-        async function mintTokens() {
+       async function mintTokens() {
 
-            var mintAmount = document.getElementById('tokenAmount').value;
-            if (mintAmount <= 0) {
-                alert('Please enter a valid number greater than zero.');
-                return;
-            }
+    var mintAmount = document.getElementById('tokenAmount').value;
+    if (mintAmount <= 0) {
+        alert('Please enter a valid number greater than zero.');
+        return;
+    }
 
-            try {
-                const contractWithSigner = myContract.connect(signer);
-                const tx = await contractWithSigner.mintFunction(mintAmount);
-                const receipt = await tx.wait();
-                console.log(`Transaction successful with hash: ${receipt.transactionHash}`);
-                document.getElementById('responseMessage').innerHTML = "Tokens minted." ;
-            } catch (error) {
-                console.error("Error calling mintFunction:", error);
-                document.getElementById('responseMessage').innerHTML = `Error: ${error.message}`;
-            }
-        }
+    try {
+        const contractWithSigner = myContract.connect(signer);
+        const tx = await contractWithSigner.mintFunction(mintAmount);
+        const receipt = await tx.wait();
+        console.log(`Transaction successful with hash: ${receipt.transactionHash}`);
+        document.getElementById('responseMessage').innerHTML = "Tokens minted." ;
+    } catch (error) {
+        console.error("Error calling mintFunction:", error);
+        document.getElementById('responseMessage').innerHTML = `Error: ${error.message}`;
+    }
+}
 
     </script>
 
