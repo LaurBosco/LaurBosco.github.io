@@ -108,7 +108,7 @@
        async function mintTokens() {
 
     var mintAmount = document.getElementById('tokenAmount').value;
-    mintAmount = mintAmount * (10^18);
+    mintAmount = mintAmount * (10**18);
     console.log("the mintAmount is ", mintAmount);
     if (mintAmount <= 0) {
         alert('Please enter a valid number greater than zero.');
