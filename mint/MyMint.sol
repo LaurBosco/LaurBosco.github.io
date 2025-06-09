@@ -1,17 +1,35 @@
-function mintFunction(uint256 amountToMint) public {
-    uint256 currentSupply = totalSupply();
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.26;
 
-    // New: Require minimum minting amount of 10 tokens (adjusted for decimals)
-    require(amountToMint >= 10 * (10 ** decimals()), 
-        "You must mint at least 10 tokens.");
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-    // New: Require maximum minting amount of 100 tokens (adjusted for decimals)
-    require(amountToMint <= 100 * (10 ** decimals()), 
-        "You cannot mint more than 100 tokens at a time.");
+contract MyMint is ERC20 {
 
-    // Existing: Ensure max supply is not exceeded
-    require(currentSupply + amountToMint <= maxTokenSupply, 
-        "Minting the amount requested would exceed the max supply allowed.");
+    string private constant tokenName = "My lorax minting smart contract."; // Token name
+    string private constant tokenSymbol = "LxC"; // Token symbol
+    uint8 private constant tokenDecimals = 18; // Number of decimal places
+    uint256 private constant maxTokenSupply = 8000000 * (10 ** uint256(tokenDecimals)); // Max token supply
 
-    _mint(msg.sender, amountToMint);
+    constructor() ERC20(tokenName, tokenSymbol) {
+        // Constructor doesn't mint any tokens — minting is handled separately
+    }
+
+    function mintFunction(uint256 amountToMint) public {
+        uint256 currentSupply = totalSupply();
+
+        // Enforce minimum mint of 10 tokens
+        require(amountToMint >= 10 * (10 ** decimals()), 
+            "You must mint at least 10 tokens.");
+
+        // Enforce maximum mint of 100 tokens per transaction
+        require(amountToMint <= 100 * (10 ** decimals()), 
+            "You cannot mint more than 100 tokens at a time.");
+
+        // Ensure minting doesn't exceed max supply
+        require(currentSupply + amountToMint <= maxTokenSupply, 
+            "Minting the amount requested would exceed the max supply allowed.");
+
+        _mint(msg.sender, amountToMint);
+    }
 }
+
