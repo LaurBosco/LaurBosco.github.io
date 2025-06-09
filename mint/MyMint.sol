@@ -14,15 +14,16 @@ contract MyMint is ERC20 {
         // Constructor doesn't mint any tokens — minting is handled separately
     }
 
-    function mintFunction(uint256 amountToMint) public {
+    function mintFunction(uint256 wholeTokensToMint) public {
+        uint256 amountToMint = wholeTokensToMint * (10 ** decimals());
         uint256 currentSupply = totalSupply();
 
         // Enforce minimum mint of 10 tokens
-        require(amountToMint >= 10 * (10 ** decimals()), 
+        require(wholeTokensToMint >= 10, 
             "You must mint at least 10 tokens.");
 
         // Enforce maximum mint of 100 tokens per transaction
-        require(amountToMint <= 100 * (10 ** decimals()), 
+        require(wholeTokensToMint <= 100, 
             "You cannot mint more than 100 tokens at a time.");
 
         // Ensure minting doesn't exceed max supply
@@ -32,4 +33,3 @@ contract MyMint is ERC20 {
         _mint(msg.sender, amountToMint);
     }
 }
-
