@@ -79,24 +79,36 @@
       console.log("supply=" + supply + " tokenAddr:" + mintContractAddress); 
     }
 
-    async function mintTokens() {
-      var mintAmount = parseInt(document.getElementById('tokenAmount').value);
-      if (!mintAmount || mintAmount < 10 || mintAmount > 100) {
-        alert('Please enter a number between 10 and 100.');
-        return;
-      }
+async function mintTokens() {
+  const mintAmount = parseInt(document.getElementById('tokenAmount').value);
+  const responseBox = document.getElementById('responseMessage');
 
-      try {
-        const contractWithSigner = myContract.connect(signer);
-        const tx = await contractWithSigner.mintFunction(mintAmount);
-        const receipt = await tx.wait();
-        console.log(`Transaction successful with hash: ${receipt.transactionHash}`);
-        document.getElementById('responseMessage').innerHTML = "✅ Tokens minted!";
-      } catch (error) {
-        console.error("Error calling mintFunction:", error);
-        document.getElementById('responseMessage').innerHTML = `❌ Error: ${error.message}`;
-      }
-    }
+  if (!mintAmount || mintAmount < 10) {
+    responseBox.style.color = "red";
+    responseBox.innerText = "❌ You must mint at least 10 tokens at a time.";
+    return;
+  }
+
+  if (mintAmount > 100) {
+    responseBox.style.color = "red";
+    responseBox.innerText = "❌ You cannot mint over 100 tokens at a time.";
+    return;
+  }
+
+  try {
+    const contractWithSigner = myContract.connect(signer);
+    const tx = await contractWithSigner.mintFunction(mintAmount);
+    const receipt = await tx.wait();
+    console.log(`Transaction successful with hash: ${receipt.transactionHash}`);
+    responseBox.style.color = "blue";
+    responseBox.innerText = "✅ Tokens minted!";
+  } catch (error) {
+    console.error("Error calling mintFunction:", error);
+    responseBox.style.color = "red";
+    responseBox.innerText = `❌ Error: ${error.message}`;
+  }
+}
+
   </script>
 
 </body>
