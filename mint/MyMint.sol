@@ -1,29 +1,17 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.26;
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+function mintFunction(uint256 amountToMint) public {
+    uint256 currentSupply = totalSupply();
 
-contract MyMint is ERC20 {
+    // New: Require minimum minting amount of 10 tokens (adjusted for decimals)
+    require(amountToMint >= 10 * (10 ** decimals()), 
+        "You must mint at least 10 tokens.");
 
-    string tokenName= "My lorax minting smart contract."; // You set the name.
-    string tokenSymbol= "LxC"; // You set the symbol.
-    uint256 tokenDecimals= 18; // Most tokens use 18 decimal places.
-    uint256 maxTokenSupply= 8000000*(10**tokenDecimals); // You set the max supply.
+    // New: Require maximum minting amount of 100 tokens (adjusted for decimals)
+    require(amountToMint <= 100 * (10 ** decimals()), 
+        "You cannot mint more than 100 tokens at a time.");
 
-    constructor() ERC20(tokenName, tokenSymbol) { 
-        /* This function creates the token, but it does not mint any tokens.
-            The minting is done by a separate function below. */     
-    }
-    
-    function mintFunction(uint256 amountToMint) public {
-        // check that current supply plus new mint amount < token supply 
-        uint256 currentSupply = totalSupply(); // Gets the current supply of this token.
-        // If the new mint would exceed maxTokenSupply, the return an error message.
-        require(currentSupply + amountToMint <= maxTokenSupply, 
-            "Minting the amount requested would exceed the max sypply allowed.") ;
+    // Existing: Ensure max supply is not exceeded
+    require(currentSupply + amountToMint <= maxTokenSupply, 
+        "Minting the amount requested would exceed the max supply allowed.");
 
-        /* You could add more requirements here like a restricting who can mint tokens
-            or the amount they are allowed to mint. */
-
-        _mint(msg.sender, amountToMint);
-    }
+    _mint(msg.sender, amountToMint);
 }
