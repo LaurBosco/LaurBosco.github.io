@@ -66,16 +66,26 @@
       font-family: Arial, sans-serif;
       margin-top: 30px;
     }
+@keyframes flashYellow {
+  0%, 90%, 100% {
+    color: black;
+  }
+  95% {
+    color: yellow;
+  }
+}
+
 #footer {
   font-family: 'Gloria Hallelujah', cursive;
-  color: black;
+  font-size: 28px; /* Bigger than before, but smaller than h1 */
   position: fixed;
   bottom: 10px;
   width: 100%;
   text-align: center;
-  font-size: 24px; /* Increased size, still smaller than the header */
+  animation: flashYellow 3s infinite;
   pointer-events: none;
 }
+
 
 
 
@@ -168,6 +178,9 @@
       }
     }
   </script>
- <div id="footer">~ I speak for the trees, and the trees say buy Lorax Coin ~</div>
+<div id="footer">
+  ~ I speak for the trees, and the trees say buy Lorax Coin ~
+</div>
+
 </body>
 </html>
