@@ -29,6 +29,8 @@
       border-radius: 10px;
       max-width: 400px;
     }
+    
+<img id="floater" src="lorax.png" alt="Floating" />
 
     h1, label {
       font-family: 'Gloria Hallelujah', cursive;
@@ -83,6 +85,14 @@
   width: 100%;
   text-align: center;
   animation: flashYellow 3s infinite;
+  pointer-events: none;
+}
+
+#floater {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -177,6 +187,48 @@
         document.getElementById('responseMessage').innerHTML = `❌ Error: ${error.message}`;
       }
     }
+    const floater = document.getElementById('floater');
+let fx = 50, fy = 50;
+let fdx = 1.5, fdy = 1.2;
+
+function animateFloater() {
+  const floaterWidth = floater.offsetWidth;
+  const floaterHeight = floater.offsetHeight;
+
+  const content = document.getElementById('content');
+  const contentRect = content.getBoundingClientRect();
+
+  const screenW = window.innerWidth;
+  const screenH = window.innerHeight;
+
+  fx += fdx;
+  fy += fdy;
+
+  // Reverse direction if hitting screen edges
+  if (fx < 0 || fx + floaterWidth > screenW) fdx *= -1;
+  if (fy < 0 || fy + floaterHeight > screenH) fdy *= -1;
+
+  // Avoid overlapping center content
+  if (
+    fx + floaterWidth > contentRect.left &&
+    fx < contentRect.right &&
+    fy + floaterHeight > contentRect.top &&
+    fy < contentRect.bottom
+  ) {
+    fdx *= -1;
+    fdy *= -1;
+    fx += fdx * 5;
+    fy += fdy * 5;
+  }
+
+  floater.style.left = fx + 'px';
+  floater.style.top = fy + 'px';
+
+  requestAnimationFrame(animateFloater);
+}
+
+animateFloater();
+
   </script>
 <div id="footer">
   ~ I am the Lorax and I speak for the trees. The trees say buy Lorax Coin ~
