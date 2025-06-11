@@ -30,7 +30,7 @@
       max-width: 400px;
     }
     
-
+<img id="floater" src="lorax.png" alt="Floating" />
 
     h1, label {
       font-family: 'Gloria Hallelujah', cursive;
@@ -68,7 +68,13 @@
       font-family: Arial, sans-serif;
       margin-top: 30px;
     }
-
+@keyframes flashYellow {
+  0%, 90%, 100% {
+    color: black;
+  }
+  95% {
+    color: yellow;
+  }
 }
 
 #footer {
@@ -78,17 +84,17 @@
   bottom: 10px;
   width: 100%;
   text-align: center;
+  animation: flashYellow 3s infinite;
   pointer-events: none;
 }
 
 #floater {
   position: absolute;
-  width: 144px;  /* 80 × 1.8 = 144 */
-  height: 144px;
+  width: 80px;
+  height: 80px;
   z-index: 1;
   pointer-events: none;
 }
-
 
 
 
@@ -119,11 +125,7 @@
     </section>
 
     <h3><span id="responseMessage" style="color:blue"></span></h3>
-  
   </div>
-
-<img id="floater" src="lorax.png" alt="Floating" />
-  
 
   <script>
     var myWallet; 
@@ -178,11 +180,11 @@
         const contractWithSigner = myContract.connect(signer);
         const tx = await contractWithSigner.mintFunction(mintAmount);
         const receipt = await tx.wait();
-        console.log(`Transaction successful with hash: ${receipt.transactionHash}`);
+        console.log(Transaction successful with hash: ${receipt.transactionHash});
         document.getElementById('responseMessage').innerHTML = "✅ Tokens minted!";
       } catch (error) {
         console.error("Error calling mintFunction:", error);
-        document.getElementById('responseMessage').innerHTML = `❌ Error: ${error.message}`;
+        document.getElementById('responseMessage').innerHTML = ❌ Error: ${error.message};
       }
     }
     const floater = document.getElementById('floater');
@@ -226,8 +228,6 @@ function animateFloater() {
 }
 
 animateFloater();
-
-
 
   </script>
 <div id="footer">
